@@ -1,0 +1,8 @@
+alert tcp any any -> $HOME_NET any (
+	msg:"POSSIBLE PORT SCAN DETECTION";
+	flags:S;
+	detection_filter:track by_dst, count 20, seconds 30;
+	classtype:network-scan;
+	sid:1000004;
+	rev:1;
+)
