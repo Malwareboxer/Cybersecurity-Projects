@@ -1,0 +1,8 @@
+#Log of inbound/outbound SSH connection attempts
+log tcp any any <> $HOME_NET 22
+(
+	msg:"SSH Connection Logged";
+	content:"SSH",fast_pattern; nocase; offset 4; depth 5;
+	sid:1000011;
+	rev:1;
+)
