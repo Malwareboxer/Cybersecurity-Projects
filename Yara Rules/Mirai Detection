@@ -1,0 +1,19 @@
+rule MAL_MIRAI_LIN_ELF_JULY25:
+    meta:
+        description = "Detects the Mirai APT botnet malware"
+        sha256_hash = "1c8de92a71e65264d73956ae5740837d8f4aa92da9f5b7ee4674212a35c7ed08"
+        reference = "https://www.cloudflare.com/learning/ddos/glossary/mirai-botnet/"
+        date = "2025-29-01"
+        
+    strings:
+	    $elf_magic = {7f 45 4c 46}
+        $s1 = "mirai.x86" ASCII
+        $s2 = "api.snapcraft.io" ASCII
+        $s3 = "@KL@WQ[@MZ" ASCII
+        $s4 = "HTTP/1.1User-Agent:" ASCII nocase
+        $s5 = ".shstrtab" ASCII
+        $s6 = "jvvrdnmmf" ASCII
+
+    condition:
+        $elf_magic at 0 and 3 of ($s*) 
+}
