@@ -1,0 +1,9 @@
+#Make sure the white_list variable is defined in the snort configuration file
+log tcp $white_list any -> $HOME_NET any 
+(
+	msg:"Whitelisted IP has accessed network";
+	flow:to_server,established;
+	classtype:web-application-activity;
+	sid:1000008;
+	rev:1;
+)
