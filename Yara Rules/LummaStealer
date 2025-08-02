@@ -1,0 +1,32 @@
+rule MAL_LummaStealer_WIN_EXE_JULY25
+{
+    meta:
+        description = "Detects the lummastealer malware based on DLL and string indicators"
+        date = "2025-29-01"
+        threat_family = "LummaStealer"
+		sha256_hash = "16d2480174becec76a0422ce0a4fdd0026fbf5dda8765b86e45f6289f0314d6b"
+
+    strings:
+		$magic = {4D 5A}
+
+		$s1 = "IMAGE_DIRECTORY_ENTRY_SECURITY" ASCII 
+		$s2 = "tasklist.exe" ASCII
+		$s3 = "%WINDIR%\System32\Wbem\WMIC.exe" ASCII
+		$s4 = "RegCloseKey" ASCII
+		$s5 = "RegEnumKeyExA" ASCII
+
+		$s6 = "pipe->flags & UV_HANDLE_READ_PENDING" ASCII
+		$s7 = "oor {0} Dinsdae" ASCII
+		$s8 = "len > 0 && len < ARRAY_SIZE(key_name)" ASCII
+
+		$dll1 = "ADVAPI32.dll" ascii nocase
+		$dll2 = "bcrypt.dll" ascii nocase
+		$dll3 = "CRYPT32.dll" ascii nocase
+		$dll4 = "KERNEL32.dll" ascii nocase
+		$dll5 = "USER32.dll" ascii nocase
+
+    condition:
+		$magic at 0
+		and any 5 of ($s*)
+		and any 4 of ($dll*)
+}
