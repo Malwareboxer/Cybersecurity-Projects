@@ -1,0 +1,9 @@
+alert tcp any any -> $HOME_NET [20, 21, 999] 
+(
+	msg:"FTP Connection from out of Network Detected";
+	flow:to_server, established;
+	classtype:network-scan;
+	detection_filter:track by_src, 5, 60
+	sid:1000006;
+	rev:2;
+)
