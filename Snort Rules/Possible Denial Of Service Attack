@@ -1,0 +1,11 @@
+alert tcp any any -> $HOME_NET any
+(
+	msg:"Possible TCP-based Denial of Service Attack";
+	detection_filter:track by_dst, 20, 60;
+	classtype:attempted-dos;
+	flow:to_server;
+	dsize:>800;
+	priority:1;
+	sid:1000012;
+	rev:2;	
+)
